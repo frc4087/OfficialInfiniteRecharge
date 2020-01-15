@@ -31,6 +31,9 @@ public final class Constants {
   public static final int RMB = 6;
   public static final int RBB = 7;
 
+  public static final int kShooterAngleMotor = 8;
+  public static final int kShooterRPMMotor = 9;
+
   public static final MotorType kMotorType = MotorType.kBrushless;
 
   //Joystick Ports 

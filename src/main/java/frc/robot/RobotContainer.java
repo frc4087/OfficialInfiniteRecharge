@@ -14,6 +14,7 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LidarBase;
 import frc.robot.subsystems.PathPlannerBase;
 //import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.ShooterBase;
 
 
 public class RobotContainer {
@@ -22,6 +23,7 @@ public class RobotContainer {
   public static final Constants m_constants = new Constants();
   public final PathPlannerBase m_pathPlannerBase = new PathPlannerBase();
   public final LidarBase m_lidarBase = new LidarBase();
+  public final ShooterBase m_shooterBase = new ShooterBase();
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
 //Control Scheme
