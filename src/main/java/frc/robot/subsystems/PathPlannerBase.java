@@ -34,11 +34,11 @@ public class PathPlannerBase extends SubsystemBase {
       m_left_follower = new EncoderFollower(left_trajectory);
       m_right_follower = new EncoderFollower(right_trajectory);
   
-      m_left_follower.configureEncoder(Robot.m_robotContainer.m_drivebase.l_encoder.get(), k_ticks_per_rev, k_wheel_diameter);
+      m_left_follower.configureEncoder((int)Robot.m_robotContainer.m_drivebase.left_ff.getEncoder().getPosition()*8172, k_ticks_per_rev, k_wheel_diameter);
       // You must tune the PID values on the following line!
       m_left_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
   
-      m_right_follower.configureEncoder(Robot.m_robotContainer.m_drivebase.r_encoder.get(), k_ticks_per_rev, k_wheel_diameter);
+      m_right_follower.configureEncoder((int)Robot.m_robotContainer.m_drivebase.right_ff.getEncoder().getPosition(), k_ticks_per_rev, k_wheel_diameter);
       // You must tune the PID values on the following line!
       m_right_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
   

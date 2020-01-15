@@ -22,14 +22,14 @@ public class Drivebase extends SubsystemBase {
   public Drivebase() {
   }
 
-    private final CANSparkMax left_ff = new CANSparkMax(Constants.LFF, Constants.kMotorType);
-    private final CANSparkMax left_mf = new CANSparkMax(Constants.LMF, Constants.kMotorType);
-    private final CANSparkMax left_bb = new CANSparkMax(Constants.LBB, Constants.kMotorType);
-    private final CANSparkMax left_mb = new CANSparkMax(Constants.LMB, Constants.kMotorType);
-    private final CANSparkMax right_mf = new CANSparkMax(Constants.RMF, Constants.kMotorType);
-    private final CANSparkMax right_ff = new CANSparkMax(Constants.RFF, Constants.kMotorType);
-    private final CANSparkMax right_bb = new CANSparkMax(Constants.RBB, Constants.kMotorType);
-    private final CANSparkMax right_mb = new CANSparkMax(Constants.RMB, Constants.kMotorType);
+    public final CANSparkMax left_ff = new CANSparkMax(Constants.LFF, Constants.kMotorType);
+    public final CANSparkMax left_mf = new CANSparkMax(Constants.LMF, Constants.kMotorType);
+    public final CANSparkMax left_bb = new CANSparkMax(Constants.LBB, Constants.kMotorType);
+    public final CANSparkMax left_mb = new CANSparkMax(Constants.LMB, Constants.kMotorType);
+    public final CANSparkMax right_ff = new CANSparkMax(Constants.RFF, Constants.kMotorType);
+    public final CANSparkMax right_mf = new CANSparkMax(Constants.RMF, Constants.kMotorType);
+    public final CANSparkMax right_bb = new CANSparkMax(Constants.RBB, Constants.kMotorType);
+    public final CANSparkMax right_mb = new CANSparkMax(Constants.RMB, Constants.kMotorType);
     
     public final SpeedControllerGroup right_side = new SpeedControllerGroup(right_mf, right_ff, right_mb, right_bb);
     public final SpeedControllerGroup left_side = new SpeedControllerGroup(left_mf, left_ff, left_mb, left_bb);
@@ -43,5 +43,12 @@ public class Drivebase extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    left_mf.follow(left_ff);
+    left_bb.follow(left_ff);
+    left_mb.follow(left_ff);
+
+    right_mf.follow(right_ff);
+    right_bb.follow(right_ff);
+    right_mb.follow(right_ff);
   }
 }
