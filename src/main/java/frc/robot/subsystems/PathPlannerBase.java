@@ -34,11 +34,11 @@ public class PathPlannerBase extends SubsystemBase {
       m_left_follower = new EncoderFollower(left_trajectory);
       m_right_follower = new EncoderFollower(right_trajectory);
   
-      m_left_follower.configureEncoder((int)Robot.m_robotContainer.m_drivebase.left_ff.getEncoder().getPosition()*8172, k_ticks_per_rev, k_wheel_diameter);
+      m_left_follower.configureEncoder((int)Robot.m_robotContainer.m_drivebase.left_ff.getEncoder().getPosition()*8192, k_ticks_per_rev, k_wheel_diameter);
       // You must tune the PID values on the following line!
       m_left_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
   
-      m_right_follower.configureEncoder((int)Robot.m_robotContainer.m_drivebase.right_ff.getEncoder().getPosition(), k_ticks_per_rev, k_wheel_diameter);
+      m_right_follower.configureEncoder((int)Robot.m_robotContainer.m_drivebase.right_ff.getEncoder().getPosition()*8192, k_ticks_per_rev, k_wheel_diameter);
       // You must tune the PID values on the following line!
       m_right_follower.configurePIDVA(1.0, 0.0, 0.0, 1 / k_max_velocity, 0);
   
@@ -53,8 +53,8 @@ public class PathPlannerBase extends SubsystemBase {
     if (m_left_follower.isFinished() || m_right_follower.isFinished()) {
       m_follower_notifier.stop();
     } else {
-      double left_speed = m_left_follower.calculate(Robot.m_robotContainer.m_drivebase.l_encoder.get());
-      double right_speed = m_right_follower.calculate(Robot.m_robotContainer.m_drivebase.r_encoder.get());
+      double left_speed = m_left_follower.calculate(Robot.m_robotContainer.m_drivebase.left_ff.getEncoder().getPosition()*8192);
+      double right_speed = m_right_follower.calculate(Robot.m_robotContainer.m_drivebase.right_ff.getEncoder().getPosition()*8192);
       double heading = Robot.m_robotContainer.m_drivebase.gyro.getAngle();
       double desired_heading = Pathfinder.r2d(m_left_follower.getHeading());
       double heading_difference = Pathfinder.boundHalfDegrees(desired_heading - heading);

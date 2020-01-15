@@ -35,9 +35,6 @@ public class Drivebase extends SubsystemBase {
     public final SpeedControllerGroup left_side = new SpeedControllerGroup(left_mf, left_ff, left_mb, left_bb);
     public final DifferentialDrive m_drive = new DifferentialDrive(left_side, right_side);
 
-    public final Encoder l_encoder = new Encoder(0, 1);//params are not real
-    public final Encoder r_encoder = new Encoder(2, 3);//params are not real
-
     public AHRS gyro = new AHRS(SPI.Port.kMXP);
 
   @Override

@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.DriveBackwards;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -18,17 +19,26 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   //private Command m_autonomousCommand;
-  public static RobotContainer m_robotContainer;
-
+ public static RobotContainer m_robotContainer;
+       public Objectavoidance m_objectAvoidence = new m_objectAvoidence();
   private static final String k_path_name = "String";
+                      Command autonomousCommand;
+              SendableChooser autoChooser;
+
   
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
+    // autonomous chooser on the dashboard (we can pick which auto code we want before the start of the match for strategy etc.)
+    m_DriveBackwards = new DriveBackwards();
     m_robotContainer = new RobotContainer();
-  }
+    autoChooser = new SendableChooser();
+    //autochoosers for the start of auto
+    autoChooser.addDefault("Object Avoidence", new m_objectAvoidence());
+    autoChooser.addObject("Drive Backwards", new m_DriveBackwards());
+    SmartDashboard.putData("auntonmous mode chooser", autoChooser);
 
+  } 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -68,12 +78,15 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
     }*/
     m_robotContainer.m_pathPlannerBase.pathSelector(k_path_name);
+    autonomousCommand = (Command) autoChooser.getSelected();
+    autonomousCommand.start();
+    //starts the chosen command at the start of the auto section
   }
 
    
     @Override
   public void autonomousPeriodic() {
-    
+    Scheduler.getInstance().run();
     }
 
 
