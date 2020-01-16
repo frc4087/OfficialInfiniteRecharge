@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.Aim;
 import frc.robot.commands.VisionTracking;
+import frc.robot.commands.autonomousgroup.DriveBackwards;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LidarBase;
 import frc.robot.subsystems.PathPlannerBase;
@@ -28,6 +29,9 @@ public class RobotContainer {
   public final LidarBase m_lidarBase = new LidarBase();
   public final ShooterBase m_shooterBase = new ShooterBase();
   public final VisionTracking m_visiontracking = new VisionTracking();
+
+  //Auto Command Group
+  public final DriveBackwards m_driveBackwards = new DriveBackwards();
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
 //Control Scheme
