@@ -10,6 +10,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.commands.Aim;
+import frc.robot.commands.VisionTracking;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LidarBase;
 import frc.robot.subsystems.PathPlannerBase;
@@ -20,10 +22,12 @@ import frc.robot.subsystems.ShooterBase;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public final Drivebase m_drivebase = new Drivebase();
+  public final Aim m_aim = new Aim();
   public static final Constants m_constants = new Constants();
   public final PathPlannerBase m_pathPlannerBase = new PathPlannerBase();
   public final LidarBase m_lidarBase = new LidarBase();
   public final ShooterBase m_shooterBase = new ShooterBase();
+  public final VisionTracking m_visiontracking = new VisionTracking();
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
 //Control Scheme
@@ -63,14 +67,17 @@ public class RobotContainer {
       return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
     }
   }
-
 //Match Period Methods
   public void teleop(){
-    if(getDriveJoy(Constants.YL) > 0.5){
-    m_drivebase.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
-  } else {
-    m_drivebase.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
-  }
+    if (driveJoy.getXButton()) {
+      new Aim();
+    } else {
+      if(getDriveJoy(Constants.YL) > 0.5){
+        m_drivebase.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
+      } else {
+        m_drivebase.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
+      }
+    }
    }
 
   /**

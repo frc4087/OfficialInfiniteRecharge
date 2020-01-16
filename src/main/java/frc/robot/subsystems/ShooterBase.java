@@ -30,9 +30,8 @@ public class ShooterBase extends SubsystemBase {
     // setDefaultCommand(new MySpecialCommand());
   } 
 
-  if(limitSwitch.get() == false) { 
-    angle_motor.getEncoder().setPosition(0.0);
-    //RESETS THE ENCODER POSITION FOR SHOOTER
+  public void setRPM(){
+    
   }
 
   public double getwantedRPM(double dist){
@@ -41,5 +40,13 @@ public class ShooterBase extends SubsystemBase {
 
   public double getwantedAngle(double dist){
     return 0.1106*Math.pow(dist, 2) - 5.053 * dist + 87.522;
+  }
+
+  public void periodic() {
+    // This method will be called once per scheduler run
+    if(limitSwitch.get() == false) { 
+      angle_motor.getEncoder().setPosition(0.0);
+      //RESETS THE ENCODER POSITION FOR SHOOTER: MAY NEED TO BE MOVED OUT OF PERIODIC
+    }
   }
 }

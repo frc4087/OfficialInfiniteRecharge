@@ -36,6 +36,8 @@ public final class Constants {
 
   public static final MotorType kMotorType = MotorType.kBrushless;
 
+  public static final int CPR = 8192;//counts per rev
+
   //Joystick Ports 
   public static final int zero = 0,
                           one = 1;
