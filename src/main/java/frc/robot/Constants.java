@@ -8,6 +8,8 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import java.util.HashMap;
+import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -34,6 +36,10 @@ public final class Constants {
   public static final int kShooterAngleMotor = 8;
   public static final int kShooterRPMMotor = 9;
 
+  public static final int kCPMotor = 10;
+
+  public static final int kColorSensor = 11;
+
   public static final MotorType kMotorType = MotorType.kBrushless;
 
   public static final int CPR = 8192;//counts per rev
@@ -48,5 +54,15 @@ public final class Constants {
                           XR = 4,
                           YR = 5;
 
+  public static final Color kBlueTarget = ColorMatch.makeColor(0.136, 0.412, 0.450);
+  public static final Color kGreenTarget = ColorMatch.makeColor(0.196, 0.557, 0.246);
+  public static final Color kRedTarget = ColorMatch.makeColor(0.475, 0.371, 0.153);
+  public static final Color kYellowTarget = ColorMatch.makeColor(0.293, 0.561, 0.144);
+
+  public static final HashMap<char, Color> FMStoColor = new HashMap<char, Color>();
+  FMStoColor.put('R', kBlueTarget);
+  FMStoColor.put('G', kYellowTarget);
+  FMStoColor.put('B', kRedTarget);
+  FMStoColor.put('Y', kGreenTarget);
 
 }
