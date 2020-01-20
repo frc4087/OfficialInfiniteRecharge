@@ -14,8 +14,8 @@ public class Climber extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-    public final CANSparkMax teleclimb = new CANSparkMax(0,1); //PLEASEESES CHANGE THESE VALUES!
-    public final CANSparkMax winchclimb = new CANSparkMax(0,1); //PLESESAESE CHANEG THESE VALUES!
+    public final CANSparkMax teleclimb = new CANSparkMax(0, Constants.kMotorType); //PLEASEESES CHANGE THESE VALUES!
+    public final CANSparkMax winchclimb = new CANSparkMax(0, Constants.kMotorType); //PLESESAESE CHANEG THESE VALUES!
 //  public final CANSparkMax unamed_climber_motor_3 = new CANSparkMax(0,1); // please change these vlaues?
   
   public Climber() {

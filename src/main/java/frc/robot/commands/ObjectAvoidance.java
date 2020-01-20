@@ -23,7 +23,7 @@ public class ObjectAvoidance extends CommandBase {
   
   public ObjectAvoidance() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_robotContainer.m_pathPlannerBase, Robot.m_robotContainer.m_lidarBase, Robot.m_robotContainer.m_drivebase);
+    
   }
 
   // Called when the command is initially scheduled.
@@ -38,7 +38,7 @@ public class ObjectAvoidance extends CommandBase {
   if(Robot.m_robotContainer.m_lidarBase.getDistance() < stopD){
       Robot.m_robotContainer.m_drivebase.m_drive.arcadeDrive(0, 0);
   } else {
-    Robot.m_robotContainer.m_pathPlannerBase.followPath();
+    
   }
   }
 

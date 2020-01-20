@@ -14,7 +14,7 @@ public class Robot extends TimedRobot {
   //private Command m_autonomousCommand;
   public static RobotContainer m_robotContainer;
 
-  private static final String k_path_name = "String";
+  
   
   
   @Override
@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }*/
-    m_robotContainer.m_pathPlannerBase.pathSelector(k_path_name);
+    
   }
 
    
