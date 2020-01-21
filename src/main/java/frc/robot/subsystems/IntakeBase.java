@@ -6,22 +6,27 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-import com.revrobotics.CANSparkMax;
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Climber extends SubsystemBase {
+import com.revrobotics.CANSparkMax;
+
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
+/**
+ * Add your docs here.
+ */
+public class IntakeBase extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-    public final CANSparkMax teleclimb = new CANSparkMax(0, Constants.kMotorType); //PLEASEESES CHANGE THESE VALUES!
-    public final CANSparkMax winchclimb = new CANSparkMax(0, Constants.kMotorType); //PLESESAESE CHANEG THESE VALUES!
-//  public final CANSparkMax unamed_climber_motor_3 = new CANSparkMax(0,1); // please change these vlaues?
   
-  public Climber() {
-//WAIT FOR OTHER PARTS OF ROBOTS (STORAGE) BEFORE CONTIUING
-  /*if(getthatcertainButton() = yup){
-    dewit
-  }*/
+  public IntakeBase() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
+
+  public final CANSparkMax RIntake =  new CANSparkMax(Constants.kRIntake, Constants.kMotorType);
+  final public CANSparkMax LIntake = new CANSparkMax(Constants.kLIntake, Constants.kMotorType);
+  final public SpeedControllerGroup IntakeMotors = new SpeedControllerGroup(RIntake, LIntake);
 }

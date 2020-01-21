@@ -5,38 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autonomousgroup;
-
+package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class DriveBackwards extends CommandBase {
-  double currentA = Robot.m_robotContainer.m_drivebase.gyro.getAngle();
-  double distance = 5; //PLEASE CHANGE THIS LATER FOR THE LOVE OF GOD!!!!!!!!!!!!!!!!!
-
-  public DriveBackwards() {
+public class IntakeOut extends CommandBase {
+  public IntakeOut() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_robotContainer.m_drivebase);
+    addRequirements(Robot.m_robotContainer.m_IntakeBase);
   }
+
 
  // Called when the command is initially scheduled.
  @Override
  public void initialize() {
  }
+
+
+
   // Called every time the scheduler runs while the command is scheduled.
  @Override
  public void execute() {  
-   //This makes our robot go backwards at the start of the match (if we want to)
-  if(Robot.m_robotContainer.m_drivebase.left_ff.getEncoder().getPosition() > distance){
-    Robot.m_robotContainer.m_drivebase.left_side.set(-0.25);
-    Robot.m_robotContainer.m_drivebase.right_side.set(-0.25);
-   }else{
-    Robot.m_robotContainer.m_drivebase.left_side.set(0);
-    Robot.m_robotContainer.m_drivebase.right_side.set(0);
-  }
-
-
+  Robot.m_robotContainer.m_intakeBase.RIntake.set(0.5);
+  Robot.m_robotContainer.m_intakeBase.LIntake.set(-0.5);
 }
+
   // Called once the command ends or is interrupted.
  @Override
  public void end(boolean interrupted) {
@@ -47,7 +40,3 @@ public class DriveBackwards extends CommandBase {
    return false;
  }
 }
-
-
-
-  

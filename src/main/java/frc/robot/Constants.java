@@ -33,6 +33,8 @@ public final class Constants {
 
   public static final int kShooterAngleMotor = 8;
   public static final int kShooterRPMMotor = 9;
+  public static final int kRIntake = 10;   //change this please?
+  public static final int kLIntake = 11; //change this please?
 
   public static final MotorType kMotorType = MotorType.kBrushless;
 
