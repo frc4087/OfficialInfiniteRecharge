@@ -29,7 +29,11 @@ public class RobotContainer {
   public final LidarBase m_lidarBase = new LidarBase();
   public final ShooterBase m_shooterBase = new ShooterBase();
   public final VisionTracking m_visiontracking = new VisionTracking();
+  public final IntakeBase m_intakeBase = new IntakeBase();
+  public final IntakeIn m_intakein = new IntakeIn();
+  public final IntakeOut m_intakeout = new IntakeOut();
 
+ 
   //Auto Command Group
   public final DriveBackwards m_driveBackwards = new DriveBackwards();
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -40,7 +44,7 @@ public class RobotContainer {
   // Initialize joysticks
   public final XboxController driveJoy = new XboxController(0);
   public final XboxController opJoy = new XboxController(1);
-
+  public Subsystem m_IntakeBase;
   //Joystick Methods
   public double getDriveJoy(int axis){
     double raw = driveJoy.getRawAxis(axis);
@@ -80,6 +84,20 @@ public class RobotContainer {
         m_drivebase.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
       } else {
         m_drivebase.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
+      }
+    }
+    if (driveJoy.getYButton()) {
+      new IntakeIn();
+    } else {
+      Robot.m_robotContainer.m_intakeBase.RIntake.set(0);
+      Robot.m_robotContainer.m_intakeBase.LIntake.set(0);
+      }
+    
+    if (driveJoy.getBButton()) {
+      new IntakeOut();
+    } else {
+      Robot.m_robotContainer.m_intakeBase.RIntake.set(0);
+      Robot.m_robotContainer.m_intakeBase.LIntake.set(0);
       }
     }
    }
