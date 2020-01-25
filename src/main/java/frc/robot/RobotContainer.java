@@ -9,12 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.I2C.Port;
-import frc.robot.subsystems.CPMBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.LidarBase;
-import frc.robot.subsystems.LidarBaseCopy;
+import frc.robot.subsystems.UltrasonicSensor;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -24,67 +23,10 @@ import frc.robot.subsystems.LidarBaseCopy;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  final Drivebase m_drivebase = new Drivebase();
-  final LidarBaseCopy m_lidarBaseCopy = new LidarBaseCopy(Port.kOnboard);
-  final LidarBase m_lidarBase = new LidarBase();
-  final CPMBase m_CPMBase = new CPMBase();
+  private final Drivebase m_drivebase = new Drivebase();
+  public final UltrasonicSensor m_ultraSonic = new UltrasonicSensor();
+  public final LidarBase m_lidarBase = new LidarBase(Port.kOnboard);
 
-  //Control Scheme
-  public static final double JOY_DEADZONE = 0.1;
-  boolean quickTurn = false;
-    // Initialize joysticks
-    public final XboxController driveJoy = new XboxController(0);
-    public final XboxController opJoy = new XboxController(1);
-
-    //Joystick Methods
-    public double getDriveJoy(int axis){
-      double raw = driveJoy.getRawAxis(axis);
-      return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
-    }
-
-    public double getOpJoy(int axis){
-      double raw = opJoy.getRawAxis(axis);
-      return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
-    }
-    
-    public boolean isQuickTurn() {
-      if (getDriveJoyBRPressed()) {
-        quickTurn = !quickTurn;
-      }
-      return quickTurn;
-    }
-
-    public boolean getDriveJoyBRPressed() {
-      return driveJoy.getBumperPressed(Hand.kRight);
-    }
-
-    public double getDriveJoyXR() {
-      double raw = driveJoy.getRawAxis(4);
-      if (isQuickTurn()) {
-        return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw > 0 ? (raw * raw) / 2 : (-raw * raw) / 2;
-      } else {
-        return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
-      }
-    }
-
-  //Match Period Methods
-  public void teleop(){
-    /*if (driveJoy.getXButton()) {
-      new Aim();
-    } else {
-      if(getDriveJoy(Constants.YL) > 0.5){
-        m_drivebase.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
-      } else {
-        m_drivebase.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
-      }
-    }*/
-
-    if(Math.abs(getDriveJoy(Constants.YL)) > 0.3){
-      m_drivebase.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
-    } else {
-      m_drivebase.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
-    }
-   }
 
 
   /**
@@ -110,8 +52,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  /*public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    //return m_autoCommand;
-  }*/
+  // public Command getAutonomousCommand() {
+  //   // An ExampleCommand will run in autonomous
+  //   return m_autoCommand;
+  // }
 }

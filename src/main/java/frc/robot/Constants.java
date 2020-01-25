@@ -8,7 +8,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -22,31 +21,32 @@ import edu.wpi.first.wpilibj.I2C.Port;
  */
 public final class Constants {
 
+    
   //Drivebase Motor Controllers
   public static final int LF = 0,
-                          LB = 1,
-                          RF = 2,
-                          RB = 3;
+  LB = 1,
+  RF = 2,
+  RB = 3;
 
-  //Joystick Ports 
-  public static final int zero = 0,
-                          one = 1;
+//Joystick Ports 
+public static final int zero = 0,
+  one = 1;
 
-  //Joystick Axes
-  public static final int XL = 0,
-                          YL = 1,
-                          XR = 4,
-                          YR = 5;
+//Joystick Axes
+public static final int XL = 0,
+  YL = 1,
+  XR = 4,
+  YR = 5;
 
-  //Characterization Toolsuite Constants
-  public static final double ksVolts = 0.546,
-                             kvVoltSecondsPerMeter = 0.083,
-                             kaVoltSecondsSquaredPerMeter = 0.00889,
-                             kTrackwidthMeters = (21.75*2.54)/100,
-                             kMaxSpeedMetersPerSecond = 3, //Need to be changed
-                             kMaxAccelerationMetersPerSecondSquared = 3, //Need to be changed
-                             kRamseteB = 2,
-                             kRamseteZeta = 0.7;
+//Characterization Toolsuite Constants
+public static final double ksVolts = 0.546,
+     kvVoltSecondsPerMeter = 0.083,
+     kaVoltSecondsSquaredPerMeter = 0.00889,
+     kTrackwidthMeters = (21.75*2.54)/100,
+     kMaxSpeedMetersPerSecond = 3, //Need to be changed
+     kMaxAccelerationMetersPerSecondSquared = 3, //Need to be changed
+     kRamseteB = 2,
+     kRamseteZeta = 0.7;
 
-  public static final I2C.Port kColorSensor = I2C.Port.kOnboard;
+public static final I2C.Port kColorSensor = I2C.Port.kOnboard;
 }

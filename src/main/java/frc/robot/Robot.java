@@ -10,7 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
@@ -20,12 +20,11 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  //private Command m_autonomousCommand;
+  private Command m_autonomousCommand;
+
+  private RobotContainer m_robotContainer;
   private Counter m_LIDAR;
  
-  final double off  = 10; //offset for sensor. test with tape measure
-  private RobotContainer m_robotContainer;
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -35,7 +34,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_robotContainer.m_lidarBase.start();
 
     m_LIDAR = new Counter(0); //plug the lidar into PWM 0
     m_LIDAR.setMaxPeriod(1.00); //set the max period that can be measured
@@ -57,12 +55,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    double dist;
-    if(m_LIDAR.get() < 1)
-      dist = 0;
-    else
-      dist = (m_LIDAR.getPeriod()*1000000.0/10.0) - off; //convert to distance. sensor is high 10 us for every centimeter. 
-    SmartDashboard.putNumber("Distance", dist); //put the distance on the dashboard
   }
 
   /**
@@ -81,12 +73,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-   /* m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
-    }*/
+    }
   }
 
   /**
@@ -102,9 +94,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    /*if (m_autonomousCommand != null) {
+    if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
-    }*/
+    }
   }
 
   /**
@@ -112,16 +104,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    m_robotContainer.teleop();
-    SmartDashboard.putNumber("Left Encoder",m_robotContainer.m_drivebase.left_f.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Right Encoder",m_robotContainer.m_drivebase.right_f.getSelectedSensorPosition());
-    m_robotContainer.m_lidarBaseCopy.startMeasuring();
-    SmartDashboard.putNumber("Lidar Copy", m_robotContainer.m_lidarBaseCopy.getDistance());
-    m_robotContainer.m_lidarBase.update();
+    SmartDashboard.putNumber("Ultrasonic", m_robotContainer.m_ultraSonic.getDistance());
+    m_robotContainer.m_lidarBase.startMeasuring();
     SmartDashboard.putNumber("Lidar", m_robotContainer.m_lidarBase.getDistance());
-    // SmartDashboard.putNumber("Red", m_robotContainer.m_CPMBase.m_colorSensor.getRed());
-    // SmartDashboard.putNumber("Green", m_robotContainer.m_CPMBase.m_colorSensor.getGreen());
-    // SmartDashboard.putNumber("Blue", m_robotContainer.m_CPMBase.m_colorSensor.getBlue());
   }
 
   @Override

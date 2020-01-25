@@ -9,8 +9,10 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.nio.ByteBuffer;
 import java.util.TimerTask;
 
+import edu.wpi.first.hal.I2CJNI;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.I2C.Port;
@@ -18,66 +20,43 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LidarBase extends SubsystemBase {
 
-  private I2C i2c;
-	private static byte[] distance;
-	private java.util.Timer updater;
-	private LIDARUpdater task;
-	
-	private final int LIDAR_ADDR = 0x62;
-	private final int LIDAR_CONFIG_REGISTER = 0x00;
-    private final int LIDAR_DISTANCE_REGISTER = 0x8f;
-  
-  public LidarBase() {
-        i2c = new I2C(Port.kOnboard, LIDAR_ADDR);
-		distance = new byte[2];
-		task = new LIDARUpdater();
-		updater = new java.util.Timer();
+  private static final byte k_deviceAddress = 0x62;
+
+  private final byte m_port;
+
+  private final ByteBuffer m_buffer = ByteBuffer.allocateDirect(2);
+
+  public LidarBase(Port port) {
+	  m_port = (byte) port.value;
+	  I2CJNI.i2CInitialize(m_port);
   }
-	
-	// Distance in inches
-	public double getDistance() {
-		return ((double)Integer.toUnsignedLong(distance[0] << 8) + Byte.toUnsignedInt(distance[1]))* 0.393701;
+
+  public void startMeasuring() {
+	  writeRegister(0x04, 0x08 | 32); // default plus bit 5
+	  writeRegister(0x11, 0xff);
+	  writeRegister(0x00, 0x04);
   }
- 
-	public double pidGet() {
-		return getDistance(); //add PID element
-	}
-	
-	// Start 10Hz polling
-	public void start() {
-		updater.scheduleAtFixedRate(task, 0, 100);
-	}
-	
-	// Start polling for period in milliseconds
-	public void start(int period) {
-		updater.scheduleAtFixedRate(task, 0, period);
-	}
-	
-	public void stop() {
-		updater.cancel();
-	}
-	
-	// Update distance variable
-	public void update() {
-		i2c.write(LIDAR_CONFIG_REGISTER, 0x04); // Initiate measurement
-		Timer.delay(0.04); // Delay for measurement to be taken
-		i2c.read(LIDAR_DISTANCE_REGISTER, 2, distance); // Read in measurement
-		Timer.delay(0.01); // Delay to prevent over polling
-	}
-	
-	// Timer task to keep distance updated
-	private class LIDARUpdater extends TimerTask {
-		public void run() {
-			while(true) {
-				update();
-				SmartDashboard.putNumber("LIDAR distance Inches", getDistance());
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+
+  public void stopMeasuring() {
+	  writeRegister(0x11, 0x00);
+  }
+
+  public double getDistance() {
+	  return (readShort(0x8f)/2.54) - 6.5;
+  }
+
+  private int writeRegister(int address, int value) {
+	  m_buffer.put(0, (byte) address);
+	  m_buffer.put(1, (byte) value);
+
+	  return I2CJNI.i2CWrite(m_port, k_deviceAddress, m_buffer, (byte) 2);
+  }
+
+  private short readShort(int address) {
+	  m_buffer.put(0, (byte) address);
+	  I2CJNI.i2CWrite(m_port, k_deviceAddress, m_buffer, (byte) 1);
+	  I2CJNI.i2CRead(m_port, k_deviceAddress, m_buffer, (byte) 2);
+	  return m_buffer.getShort(0);
   }
 
   @Override
