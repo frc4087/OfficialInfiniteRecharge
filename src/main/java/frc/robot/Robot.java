@@ -8,11 +8,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.autonomousgroup.DriveBackwards;
 
 public class Robot extends TimedRobot {
   //private Command m_autonomousCommand;
   public static RobotContainer m_robotContainer;
+  
+  DriveBackwards m_driveBackwards;
+  SendableChooser<Object> autoChooser;
 
   private static final String k_path_name = "String";
   
@@ -22,6 +27,10 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    autoChooser = new SendableChooser<>();
+
+    autoChooser.addOption("Drive Backwards", new DriveBackwards());   
+
   }
 
   /**

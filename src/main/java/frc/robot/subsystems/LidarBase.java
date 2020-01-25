@@ -18,14 +18,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LidarBase extends SubsystemBase {
 
-  private I2C i2c;
+    private I2C i2c;
 	private static byte[] distance;
 	private java.util.Timer updater;
 	private LIDARUpdater task;
 	
 	private final int LIDAR_ADDR = 0x62;
 	private final int LIDAR_CONFIG_REGISTER = 0x00;
-  private final int LIDAR_DISTANCE_REGISTER = 0x8f;
+    private final int LIDAR_DISTANCE_REGISTER = 0x8f;
   
   public LidarBase() {
     i2c = new I2C(Port.kMXP, LIDAR_ADDR);

@@ -76,7 +76,7 @@ public class RobotContainer {
     if (driveJoy.getXButton()) {
       new Aim();
     } else {
-      if(getDriveJoy(Constants.YL) > 0.5){
+      if(Math.abs(getDriveJoy(Constants.YL)) > 0.5){
         m_drivebase.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
       } else {
         m_drivebase.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
