@@ -8,29 +8,29 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+//import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.autonomousgroup.DriveBackwards;
 
+/**
+ * The VM is configured to automatically run this class, and to call the functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the name of this class or
+ * the package after creating this project, you must also update the build.gradle file in the
+ * project.
+ */
 public class Robot extends TimedRobot {
   //private Command m_autonomousCommand;
-  public static RobotContainer m_robotContainer;
-  
-  DriveBackwards m_driveBackwards;
-  SendableChooser<Object> autoChooser;
 
-  private static final String k_path_name = "String";
-  
-  
+  public static RobotContainer m_robotContainer;
+
+  /**
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
+   */
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    autoChooser = new SendableChooser<>();
-
-    autoChooser.addOption("Drive Backwards", new DriveBackwards());   
-
   }
 
   /**
@@ -71,19 +71,18 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }*/
-    m_robotContainer.m_pathPlannerBase.pathSelector(k_path_name);
   }
 
-   
-    @Override
+  /**
+   * This function is called periodically during autonomous.
+   */
+  @Override
   public void autonomousPeriodic() {
-    
-    }
-
+  }
 
   @Override
   public void teleopInit() {
-    // This makes  sure that the autonomous stops running when
+    // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.

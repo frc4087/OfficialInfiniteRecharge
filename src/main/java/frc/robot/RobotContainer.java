@@ -10,79 +10,78 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import frc.robot.commands.Aim;
-import frc.robot.commands.VisionTracking;
-import frc.robot.commands.autonomousgroup.DriveBackwards;
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.LidarBase;
-import frc.robot.subsystems.PathPlannerBase;
-//import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterBase;
+import frc.robot.subsystems.DrivebaseAuto;
+import frc.robot.subsystems.DrivebaseTeleop;
 
-
+/**
+ * This class is where the bulk of the robot should be declared.  Since Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
+ * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
+ * (including subsystems, commands, and button mappings) should be declared here.
+ */
 public class RobotContainer {
+
   // The robot's subsystems and commands are defined here...
-  public final Drivebase m_drivebase = new Drivebase();
-  public final Aim m_aim = new Aim();
-  public static final Constants m_constants = new Constants();
-  public final PathPlannerBase m_pathPlannerBase = new PathPlannerBase();
-  public final LidarBase m_lidarBase = new LidarBase();
-  public final ShooterBase m_shooterBase = new ShooterBase();
-  public final VisionTracking m_visiontracking = new VisionTracking();
+  final public DrivebaseTeleop m_drivebaseTeleop = new DrivebaseTeleop();
+  final public DrivebaseAuto m_drivebaseAuto = new DrivebaseAuto();
 
-  //Auto Command Group
-  public final DriveBackwards m_driveBackwards = new DriveBackwards();
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-//Control Scheme
+  //Control Scheme
   public static final double JOY_DEADZONE = 0.1;
   boolean quickTurn = false;
-  // Initialize joysticks
-  public final XboxController driveJoy = new XboxController(0);
-  public final XboxController opJoy = new XboxController(1);
+    // Initialize joysticks
+    public final XboxController driveJoy = new XboxController(0);
+    public final XboxController opJoy = new XboxController(1);
 
-  //Joystick Methods
-  public double getDriveJoy(int axis){
-    double raw = driveJoy.getRawAxis(axis);
-    return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
-  }
-
-  public double getOpJoy(int axis){
-    double raw = opJoy.getRawAxis(axis);
-    return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
-  }
-  
-  public boolean isQuickTurn() {
-    if (getDriveJoyBRPressed()) {
-      quickTurn = !quickTurn;
-    }
-    return quickTurn;
-  }
-
-  public boolean getDriveJoyBRPressed() {
-    return driveJoy.getBumperPressed(Hand.kRight);
-  }
-
-  public double getDriveJoyXR() {
-    double raw = driveJoy.getRawAxis(4);
-    if (isQuickTurn()) {
-      return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw > 0 ? (raw * raw) / 2 : (-raw * raw) / 2;
-    } else {
+    //Joystick Methods
+    public double getDriveJoy(int axis){
+      double raw = driveJoy.getRawAxis(axis);
       return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
     }
-  }
-//Match Period Methods
+
+    public double getOpJoy(int axis){
+      double raw = opJoy.getRawAxis(axis);
+      return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
+    }
+    
+    public boolean isQuickTurn() {
+      if (getDriveJoyBRPressed()) {
+        quickTurn = !quickTurn;
+      }
+      return quickTurn;
+    }
+
+    public boolean getDriveJoyBRPressed() {
+      return driveJoy.getBumperPressed(Hand.kRight);
+    }
+
+    public double getDriveJoyXR() {
+      double raw = driveJoy.getRawAxis(4);
+      if (isQuickTurn()) {
+        return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw > 0 ? (raw * raw) / 2 : (-raw * raw) / 2;
+      } else {
+        return Math.abs(raw) < JOY_DEADZONE ? 0.0 : raw;
+      }
+    }
+
+  //Match Period Methods
   public void teleop(){
-    if (driveJoy.getXButton()) {
+    /*if (driveJoy.getXButton()) {
       new Aim();
     } else {
-      if(Math.abs(getDriveJoy(Constants.YL)) > 0.5){
+      if(getDriveJoy(Constants.YL) > 0.5){
         m_drivebase.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
       } else {
         m_drivebase.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
       }
+    }*/
+
+    if(Math.abs(getDriveJoy(Constants.YL)) > 0.3){
+      m_drivebaseTeleop.m_drive.curvatureDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR), isQuickTurn());
+    } else {
+      m_drivebaseTeleop.m_drive.arcadeDrive(getDriveJoy(Constants.YL), getDriveJoy(Constants.XR));
     }
    }
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -99,7 +98,6 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
   }
 
 
@@ -110,6 +108,6 @@ public class RobotContainer {
    */
   /*public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    //return m_autoCommand;
   }*/
 }
