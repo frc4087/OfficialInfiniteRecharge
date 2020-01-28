@@ -7,48 +7,44 @@
 
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+//import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Drivebase extends SubsystemBase {
-
+  /**
+   * Creates a new Drivebase.
+   */
   public Drivebase() {
   }
 
-    public final CANSparkMax left_ff = new CANSparkMax(Constants.LFF, Constants.kMotorType);
-    public final CANSparkMax left_mf = new CANSparkMax(Constants.LMF, Constants.kMotorType);
-    public final CANSparkMax left_bb = new CANSparkMax(Constants.LBB, Constants.kMotorType);
-    public final CANSparkMax left_mb = new CANSparkMax(Constants.LMB, Constants.kMotorType);
-    public final CANSparkMax right_ff = new CANSparkMax(Constants.RFF, Constants.kMotorType);
-    public final CANSparkMax right_mf = new CANSparkMax(Constants.RMF, Constants.kMotorType);
-    public final CANSparkMax right_bb = new CANSparkMax(Constants.RBB, Constants.kMotorType);
-    public final CANSparkMax right_mb = new CANSparkMax(Constants.RMB, Constants.kMotorType);
+  public final WPI_TalonSRX left_f = new WPI_TalonSRX(Constants.LF);
+  public final WPI_TalonSRX left_b = new WPI_TalonSRX(Constants.LB);
+  public final WPI_TalonSRX right_f = new WPI_TalonSRX(Constants.RF);
+  public final WPI_TalonSRX right_b = new WPI_TalonSRX(Constants.RB);
+
+  public final SpeedControllerGroup left_side = new SpeedControllerGroup(left_f, left_b);
+  public final SpeedControllerGroup right_side = new SpeedControllerGroup(right_f, right_b);
+  public final DifferentialDrive m_drive = new DifferentialDrive(left_side, right_side);
+
+  //public static final DifferentialDriveKinematics m_driveKinematics = new DifferentialDriveKinematics(Constants.kTrackwidthMeters);
+
+  private final Gyro m_gyro = new ADXRS450_Gyro();
+
+  //private final DifferentialDriveOdometry m_odometry;
+
     
-    public final SpeedControllerGroup right_side = new SpeedControllerGroup(right_mf, right_ff, right_mb, right_bb);
-    public final SpeedControllerGroup left_side = new SpeedControllerGroup(left_mf, left_ff, left_mb, left_bb);
-    public final DifferentialDrive m_drive = new DifferentialDrive(left_side, right_side);
-
-    public final Encoder l_encoder = new Encoder(0, 1);//params are not real
-    public final Encoder r_encoder = new Encoder(2, 3);//params are not real
-
-    public AHRS gyro = new AHRS(SPI.Port.kMXP);
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    left_mf.follow(left_ff);
-    left_bb.follow(left_ff);
-    left_mb.follow(left_ff);
-
-    right_mf.follow(right_ff);
-    right_bb.follow(right_ff);
-    right_mb.follow(right_ff);
   }
 }

@@ -9,6 +9,9 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.I2C;
+
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -22,21 +25,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public final class Constants {
 
   //Drivebase Motor Controllers
-  public static final int LFF = 0;
-  public static final int LMF = 1;
-  public static final int LMB = 2;
-  public static final int LBB = 3;
-  public static final int RFF = 4;
-  public static final int RMF = 5;
-  public static final int RMB = 6;
-  public static final int RBB = 7;
-
-  public static final int kShooterAngleMotor = 8;
-  public static final int kShooterRPMMotor = 9;
-
-  public static final MotorType kMotorType = MotorType.kBrushless;
-
-  public static final int CPR = 8192;//counts per rev
+  public static final int LF = 0,
+                          LB = 1,
+                          RF = 2,
+                          RB = 3;
 
   //Joystick Ports 
   public static final int zero = 0,
@@ -48,5 +40,17 @@ public final class Constants {
                           XR = 4,
                           YR = 5;
 
+  //Characterization Toolsuite Constants
+  public static final double ksVolts = 0.546,
+                             kvVoltSecondsPerMeter = 0.083,
+                             kaVoltSecondsSquaredPerMeter = 0.00889,
+                             kTrackwidthMeters = (21.75*2.54)/100,
+                             kMaxSpeedMetersPerSecond = 3, //Need to be changed
+                             kMaxAccelerationMetersPerSecondSquared = 3, //Need to be changed
+                             kRamseteB = 2,
+                             kRamseteZeta = 0.7;
 
+  public static final I2C.Port kColorSensor = I2C.Port.kOnboard;
+  public static final int kCPMotor = 4;
+  public static final MotorType kMotorType = MotorType.kBrushless;
 }
