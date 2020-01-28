@@ -7,7 +7,7 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -22,21 +22,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public final class Constants {
 
   //Drivebase Motor Controllers
-  public static final int LFF = 0;
-  public static final int LMF = 1;
-  public static final int LMB = 2;
-  public static final int LBB = 3;
-  public static final int RFF = 4;
-  public static final int RMF = 5;
-  public static final int RMB = 6;
-  public static final int RBB = 7;
-
-  public static final int kShooterAngleMotor = 8;
-  public static final int kShooterRPMMotor = 9;
-
-  public static final MotorType kMotorType = MotorType.kBrushless;
-
-  public static final int CPR = 8192;//counts per rev
+  public static final int LF = 0,
+                          LB = 1,
+                          RF = 2,
+                          RB = 3;
 
   //Joystick Ports 
   public static final int zero = 0,
@@ -48,5 +37,21 @@ public final class Constants {
                           XR = 4,
                           YR = 5;
 
+  //Characterization Toolsuite Constants
+  public static final double ksVolts = 0.546,
+                             kvVoltSecondsPerMeter = 0.083,
+                             kaVoltSecondsSquaredPerMeter = 0.00889,
+                             kTrackwidthMeters = (21.75*2.54)/100,
+                             kMaxSpeedMetersPerSecond = 3, //Need to be changed
+                             kMaxAccelerationMetersPerSecondSquared = 3, //Need to be changed
+                             kRamseteB = 2,
+                             kRamseteZeta = 0.7,
+                             kPDriveVel = 0.2; //CHANGE THIS LATER
+                             
+  public static final DifferentialDriveKinematics m_driveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
 
+  //Encoder Constants
+  public static final double kEncoderDistancePerPulse = (6*3.14)/(360*4);
+
+  public static final boolean kGyroReversed = false;
 }
